@@ -1,0 +1,66 @@
+services:
+  traefik:
+    image: traefik:latest
+    command:
+      - "--api.insecure=${TRAEFIK_API_INSECURE:-false}"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - public-pool
+
+  bitcoind:
+    image: printergobrrr/bitcoind:pool
+    volumes:
+      - "./bitcoin-data:/data"
+    ports:
+      - "8333:8333"
+      - "8332:8332"
+      - "3000:3000"
+    networks:
+      - public-pool
+
+  public-pool:
+    image: benjamin-wilson/publicpool:latest
+    env_file:
+      - ./configs/pool.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.public-pool.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.public-pool.entrypoints=websecure"
+      - "traefik.http.routers.public-pool.tls.certresolver=myresolver"
+    networks:
+      - public-pool
+
+  public-pool-ui:
+    image: benjamin-wilson/publicpool-ui:latest
+    environment:
+      - DOMAIN=${DOMAIN}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.public-pool-ui.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.public-pool-ui.entrypoints=websecure"
+      - "traefik.http.routers.public-pool-ui.tls.certresolver=myresolver"
+    networks:
+      - public-pool
+
+networks:
+  public-pool:
+    name: public-pool
+    
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
