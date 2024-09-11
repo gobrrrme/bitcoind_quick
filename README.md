@@ -126,13 +126,13 @@ This setup process ensures a secure and efficient initialization of your Bitcoin
 Once your container is synced, start the rest of the containers one by one:
 
 ```bash
+docker-compose up -d traefik
 docker-compose up -d public-pool
 docker-compose up -d public-pool-ui
 docker-compose up -d watchtower
 ```
 
-
-Check the logs of public-pool:
+Check the logs of the publicpool container:
 
 ```bash
 docker logs -f public-pool
