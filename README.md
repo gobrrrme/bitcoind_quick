@@ -25,7 +25,7 @@ Run the setup script:
 ./setup.sh
 ```
 
-If you want bitcoind and public pool, run setup.sh
+If you want bitcoind and public-pool, run setup.sh
 
 This script:
 
@@ -52,8 +52,7 @@ Consider your available bandwidth and storage when making this choice. If you ha
 
 After the initial setup, you can start your Bitcoin node using 
 
-
-Docker run:
+If you just want the bitcoin container, use Docker run:
 
 ```bash
 docker run -d \
@@ -65,33 +64,22 @@ docker run -d \
   printergobrrr/bitcoind:pool
 ```
 
-or Docker Compose:
+if you want bitcoin and public-pool, use Docker Compose:
 
 ```bash
 docker-compose up -d bitcoind
 ```
+**The bitcoin container needs to sync before you can start the rest**
 
-Your `docker-compose.yml` file should look something like this:
+A `docker-compose.yml` file can be found in the repo.
 
-```yaml
-version: '3'
-services:
-  bitcoind:
-    build: .
-    volumes:
-      - ./bitcoind-data:/data
-    ports:
-      - "3000:3000"
-      - "8333:8333"
-	  - "8332:8332"
-```
 
-This configuration ensures that:
+The bitcoin container configuration ensures that:
 - The `bitcoin.conf` file and blockchain data persist between container restarts
 - The necessary ports are exposed for ZMQ and P2P network connections
 
 **Important Security Note**: 
-Port 8332 is the RPC port used by Bitcoin Core for API access. For security reasons, this port should only be used for internal connections and should not be exposed on the host machine to the public internet.
+Port 8332 is the RPC port used by Bitcoin Core for API access. For security reasons, this port should only be used for internal connections and should not be exposed on the host machine.
 
 
 Basic ufw setup to secure your install
@@ -132,3 +120,25 @@ docker logs -f bitcoind
 The `bitcoin.conf` file contains your RPC credentials. Keep this file secure and never share it. If you need to change the credentials, you'll need to modify `bitcoin.conf` and restart the container.
 
 This setup process ensures a secure and efficient initialization of your Bitcoin node, leveraging a UTXO snapshot for faster initial synchronization when needed.
+
+### Public Pool Setup
+
+Once your container is synced, start the rest of the containers one by one:
+
+```bash
+docker-compose up -d public-pool
+docker-compose up -d public-pool-ui
+docker-compose up -d watchtower
+```
+
+
+Check the logs of public-pool:
+
+```bash
+docker logs -f public-pool
+```
+
+(Press CTRL+C to exit logs)
+
+
+If all went well, your public-pool should be reachable on the configured domain or on localhost.
