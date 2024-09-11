@@ -1,6 +1,8 @@
 services:
   traefik:
     image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
     command:
       - "--api.insecure=${TRAEFIK_API_INSECURE:-false}"
       - "--providers.docker=true"
@@ -21,6 +23,8 @@ services:
 
   bitcoind:
     image: printergobrrr/bitcoind:pool
+    container_name: bitcoind
+    restart: unless-stopped
     volumes:
       - "./bitcoin-data:/data"
     ports:
@@ -32,6 +36,8 @@ services:
 
   public-pool:
     image: benjamin-wilson/publicpool:latest
+    container_name: publicpool
+    restart: unless-stopped
     env_file:
       - ./configs/pool.env
     labels:
@@ -44,6 +50,8 @@ services:
 
   public-pool-ui:
     image: benjamin-wilson/publicpool-ui:latest
+    container_name: publicpool-ui
+    restart: unless-stopped
     environment:
       - DOMAIN=${DOMAIN}
     labels:
