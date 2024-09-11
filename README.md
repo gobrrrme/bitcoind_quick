@@ -8,7 +8,7 @@ Setup involves a two-step process, initial setup and then running the container.
 
 ### Step 1: Initial Setup
 
-Before running the container for the first time, you need to run the one of the two setup scripts.
+Before running the container for the first time, you need to run one of the two setup scripts.
 
 If you only want a bitcoind container and no public pool, run bitcoind_setup.sh
 
@@ -31,6 +31,11 @@ This script:
 
 1. Does everything the above script does
 2. Prepares files and populates them with credentials
+
+
+```bash
+./bitcoind_setup.sh
+```
 
 **IMPORTANT**: The script you chose will display your RPC credentials. Make sure to save these in a secure location immediately. They will not be shown again.
 
