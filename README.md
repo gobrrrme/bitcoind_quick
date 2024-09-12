@@ -30,7 +30,7 @@ If you want bitcoind and public-pool, run setup.sh
 This script:
 
 1. Does everything the above script does
-2. Prepares files and populates them with credentials
+2. Prepares additional files for publicpool and populates them with credentials
 
 
 ```bash
