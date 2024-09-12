@@ -16,7 +16,7 @@ Setup involves a two-step process, initial setup and then running the container.
 
 Before running the container for the first time, you need to run one of the two setup scripts.
 
-Make the setup script executable:
+Make the setup scripts executable:
    ```bash
    chmod +x setup.sh
    chmod +x bitcoind_setup.sh
