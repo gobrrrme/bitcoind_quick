@@ -30,6 +30,18 @@ mkdir -p bitcoind-data
 RPC_USER=$(generate_random_string)
 RPC_PASSWORD=$(generate_random_string)
 
+# Prompt for domain
+read -p "Enter the domain for your Bitcoin node (or press Enter for 'localhost'): " domain
+domain=${domain:-localhost}
+
+# Create or update .env file
+cat > .env <<EOF
+DOMAIN=$domain
+BITCOIN_RPC_USER=$RPC_USER
+BITCOIN_RPC_PASSWORD=$RPC_PASSWORD
+EOF
+echo "Created/Updated .env file with DOMAIN=$domain and RPC credentials"
+
 # Create bitcoin.conf if it doesn't exist
 if [ ! -f bitcoin.conf ]; then
     cat > bitcoin.conf <<EOF
