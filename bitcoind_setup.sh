@@ -7,8 +7,12 @@ generate_random_string() {
     openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | fold -w 21 | head -n 1
 }
 
+echo "creating bitcoin data directory"
+
 # Create necessary directories
 mkdir -p bitcoind-data
+
+echo "generatings secure rpc credentials"
 
 # Generate secure RPC credentials
 RPC_USER=$(generate_random_string)
@@ -23,6 +27,8 @@ rpcpassword=$RPC_PASSWORD
 rpcallowip=0.0.0.0/0
 rpcbind=0.0.0.0
 zmqpubrawblock=tcp://0.0.0.0:3000
+whitelist=172.16.0.0/12
+disablewallet=1
 prune=5000
 EOF
     echo "Created bitcoin.conf"
@@ -66,7 +72,6 @@ echo "RPC Password: $RPC_PASSWORD"
 echo ""
 echo "These credentials have been added to your persistent bitcoin.conf. You're welcome"
 echo "Make sure to keep these files secure and do not share them."
-echo "If you lose these credentials, you must create new credentials, update your configuration files and restart containers."
 echo "Setup complete. You can now run 'docker compose up -d bitcoind'"
 echo "After starting the bitcoin container, wait until it's fully synced before attempting to connect to it"
 echo "You can check the status with 'docker logs -f bitcoind'  (press CRTL+C to exit logs)"
