@@ -15,6 +15,7 @@ services:
       - "3000:3000"
     networks:
       - public-pool
+    command: ["-conf=/data/bitcoin.conf", "-datadir=/data", "-zmqpubrawblock=tcp://0.0.0.0:3000"]
 
   public-pool:
     image: benjamin-wilson/publicpool:latest
