@@ -1,32 +1,16 @@
-services:
-  traefik:
-    image: traefik:latest
-    container_name: traefik
-    restart: unless-stopped
-    command:
-      - "--api.insecure=${TRAEFIK_API_INSECURE:-false}"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./letsencrypt:/letsencrypt"
-    networks:
-      - public-pool
+version: '3'
 
+services:
   bitcoind:
-    image: bitcoind_quick
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: bitcoind_quick
     container_name: bitcoind
     restart: unless-stopped
     volumes:
       - "./bitcoin-data:/data"
+      - "./bitcoin.conf:/data/bitcoin.conf"
     ports:
       - "8333:8333"
       - "8332:8332"
@@ -39,7 +23,7 @@ services:
     container_name: publicpool
     restart: unless-stopped
     env_file:
-      - ./configs/pool.env
+      - ./pool.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.public-pool.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
@@ -62,13 +46,15 @@ services:
     networks:
       - public-pool
 
-networks:
-  public-pool:
-    name: public-pool
-    
   watchtower:
     image: containrrr/watchtower:latest
     container_name: watchtower
     restart: unless-stopped
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - public-pool
+
+networks:
+  public-pool:
+    name: public-pool
