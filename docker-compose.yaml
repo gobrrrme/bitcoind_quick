@@ -2,10 +2,8 @@ version: '3'
 
 services:
   bitcoind:
-  build:
-    context: .
-    dockerfile: Dockerfile
-  image: bitcoind_quick
+    build: .
+    image: bitcoind_quick
     container_name: bitcoind
     restart: unless-stopped
     volumes:
