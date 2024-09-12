@@ -22,7 +22,7 @@ services:
       - public-pool
 
   bitcoind:
-    image: printergobrrr/bitcoind:pool
+    image: bitcoind_quick
     container_name: bitcoind
     restart: unless-stopped
     volumes:
