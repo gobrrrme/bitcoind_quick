@@ -59,9 +59,9 @@ docker run -d \
   -p 8333:8333 \
   -p 8332:8332 \
   -p 3000:3000 \
-  -v /root/bitcoind-data:/data \
+  -v ./bitcoind-data:/data \
   --name bitcoind \
-  printergobrrr/bitcoind:pool
+  bitcoind_quick
 ```
 
 if you want bitcoin and public-pool, use Docker Compose:
@@ -71,15 +71,15 @@ docker-compose up -d bitcoind
 ```
 **The bitcoin container needs to sync before you can start the rest**
 
-A `docker-compose.yml` file can be found in the repo.
+A basic `docker-compose.yml` file can be found in the repo.
 
 
-The bitcoin container configuration ensures that:
+This bitcoin container configuration ensures that:
 - The `bitcoin.conf` file and blockchain data persist between container restarts
 - The necessary ports are exposed for ZMQ and P2P network connections
 
-**Important Security Note**: 
-Port 8332 is the RPC port used by Bitcoin Core for API access. For security reasons, this port should only be used for internal connections and should not be exposed on the host machine.
+**Security Note**: 
+Port 8332 is the RPC port used by Bitcoin Core for API access. This port should only ever be used for internal connections, it can be dangerous to expose it on the host machine.
 
 
 Basic ufw setup to secure your install
