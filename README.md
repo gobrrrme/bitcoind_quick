@@ -4,11 +4,23 @@ A dockerized bitcoin core container for quickly spinning up a (pruned) node with
 
 ## Setup and Usage
 
+Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   cd your-repo-name
+   ```
+
 Setup involves a two-step process, initial setup and then running the container.
 
 ### Step 1: Initial Setup
 
 Before running the container for the first time, you need to run one of the two setup scripts.
+
+Make the setup script executable:
+   ```bash
+   chmod +x setup.sh
+   chmod +x bitcoind_setup.sh
+   ```
 
 If you only want a bitcoind container and no public pool, run bitcoind_setup.sh
 
@@ -31,7 +43,6 @@ This script:
 
 1. Does everything the above script does
 2. Prepares additional files for publicpool and populates them with credentials
-
 
 ```bash
 ./bitcoind_setup.sh
