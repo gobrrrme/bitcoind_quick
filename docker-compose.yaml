@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  bitcoind:
+    build: .
+    image: bitcoind_quick
+    container_name: bitcoind
+    restart: unless-stopped
+    volumes:
+      - "./bitcoin-data:/data"
+      - "./bitcoin.conf:/data/bitcoin.conf"
+    ports:
+      - "8333:8333"
+      - "8332:8332"
+      - "3000:3000"
+    networks:
+      - public-pool
+
+  public-pool:
+    image: benjamin-wilson/publicpool:latest
+    container_name: publicpool
+    restart: unless-stopped
+    env_file:
+      - ./pool.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.public-pool.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.public-pool.entrypoints=websecure"
+      - "traefik.http.routers.public-pool.tls.certresolver=myresolver"
+    networks:
+      - public-pool
+
+  public-pool-ui:
+    image: benjamin-wilson/publicpool-ui:latest
+    container_name: publicpool-ui
+    restart: unless-stopped
+    environment:
+      - DOMAIN=${DOMAIN}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.public-pool-ui.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.public-pool-ui.entrypoints=websecure"
+      - "traefik.http.routers.public-pool-ui.tls.certresolver=myresolver"
+    networks:
+      - public-pool
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - public-pool
+
+networks:
+  public-pool:
+    name: public-pool
