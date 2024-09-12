@@ -35,8 +35,8 @@ EOF
 fi
 
 # Update configuration files
-sed -i "s/REPLACE_RPC_USER/$RPC_USER/" configs/bitcoin.conf
-sed -i "s/REPLACE_RPC_PASSWORD/$RPC_PASSWORD/" configs/bitcoin.conf
+sed -i "s/REPLACE_RPC_USER/$RPC_USER/" bitcoin.conf
+sed -i "s/REPLACE_RPC_PASSWORD/$RPC_PASSWORD/" bitcoin.conf
 
 # Prompt for UTXO snapshot download
 if [ ! -d "bitcoind-data/blocks" ] || [ ! -d "bitcoind-data/chainstate" ]; then
