@@ -6,8 +6,8 @@ A dockerized bitcoin core container for quickly spinning up a (pruned) node with
 
 Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/gobrrrme/bitcoind_quick
+   cd bitcoind_quick
    ```
 
 Setup involves a two-step process, initial setup and then running the container.
