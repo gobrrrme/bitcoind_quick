@@ -22,14 +22,14 @@ Make the setup scripts executable:
    chmod +x bitcoind_setup.sh
    ```
 
-If you only want a bitcoind container and no public pool, run bitcoind_setup.sh
+If you want just the bitcoind container and don't plan to run public pool, run bitcoind_setup.sh
 
 This script:
 
 1. Creates necessary directories
 2. Generates secure RPC credentials
-3. Creates a `bitcoin.conf` file with appropriate settings
-4. Downloads a UTXO snapshot to speed up initial synchronization (if needed)
+3. Creates a `bitcoin.conf` file with appropriate settings (edit it to your liking)
+4. Downloads a UTXO snapshot to speed up initial synchronization (optional)
 
 Run the setup script:
 
