@@ -156,6 +156,6 @@ If your pool runs as expected, it's time to point miners to it.
 
 
 # Use this software at your own risk!
-# I'm not a software engineer, you might encounter bugs or problems I didn't account for. If so, please create an issue.
+### I'm not a software developer, you might encounter bugs or problems I didn't account for. If so, please create an issue.
 
 If all went well, your public-pool should be reachable on the configured domain or on localhost.
