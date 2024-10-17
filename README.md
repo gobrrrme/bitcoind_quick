@@ -154,8 +154,15 @@ docker logs -f public-pool
 ### That's basically it.
 If your pool runs as expected, it's time to point miners to it.
 
-
 # Use this software at your own risk!
 ### I'm not a software developer, you might encounter bugs or problems I didn't account for. If so, please create an issue.
 
 If all went well, your public-pool should be reachable on the configured domain or on localhost.
+
+
+
+
+
+
+### Credits
+This repository is based on the work of [Nicolas Dorier](https://github.com/NicolasDorier), [Benjamin Wilson](https://github.com/benjamin-wilson/), [Sethforprivacy](https://github.com/sethforprivacy), [Kyle Manna](https://github.com/kylemanna), and [TheBitcoinProf](https://github.com/TheBitcoinProf/)
