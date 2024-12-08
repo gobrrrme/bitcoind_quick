@@ -14,6 +14,20 @@ Setup involves a two-step process, initial setup and then running the container.
 
 ### Step 1: Initial Setup
 
+Before setting up bitcoind you need to choose an implementation, for Bitcoin Quick you have the choice between [Bitcoin Knots](https://github.com/bitcoinknots/bitcoin) (recommended) and [Bitcoin Core](https://github.com/bitcoin/bitcoin).
+
+To choose Bitcoin Knots:
+
+```
+mv Dockerfile-knots Dockerfile
+```
+
+To choose Bitcoin Core:
+
+```
+mv Dockerfile-core Dockerfile
+```
+
 Before running the container for the first time, you need to run one of the two setup scripts.
 
 Make the setup scripts executable:
