@@ -18,7 +18,7 @@ services:
     command: ["-conf=/data/bitcoin.conf", "-datadir=/data", "-zmqpubrawblock=tcp://0.0.0.0:3000"]
 
   public-pool:
-    image: benjamin-wilson/publicpool:latest
+    image: printergobrrr/publicpool:latest
     container_name: publicpool
     restart: unless-stopped
     env_file:
@@ -32,7 +32,7 @@ services:
       - public-pool
 
   public-pool-ui:
-    image: benjamin-wilson/publicpool-ui:latest
+    image: printergobrrr/publicpool-ui:latest
     container_name: publicpool-ui
     restart: unless-stopped
     environment:
