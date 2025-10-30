@@ -56,4 +56,3 @@ services:
 
 networks:
   public-pool:
-    name: public-pool
