@@ -39,9 +39,13 @@ rpcpassword=$RPC_PASSWORD
 rpcallowip=0.0.0.0/0
 rpcbind=0.0.0.0
 zmqpubrawblock=tcp://0.0.0.0:3000
+blockmaxweight=4000000
 whitelist=172.16.0.0/12
 disablewallet=1
 prune=5000
+maxsigcachesize=100
+shrinkdebugfile=1
+maxdebugfilesize=100
 EOF
     echo "Created bitcoin.conf"
 fi
